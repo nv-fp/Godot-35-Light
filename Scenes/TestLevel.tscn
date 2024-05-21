@@ -1,13 +1,16 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Scripts/Main.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/TestLevel.cs" type="Script" id=1]
 [ext_resource path="res://Art/tilesheet.png" type="Texture" id=2]
 [ext_resource path="res://Art/Tileset.tres" type="TileSet" id=3]
+[ext_resource path="res://Art/light_tex.png" type="Texture" id=4]
+
+[sub_resource type="OccluderPolygon2D" id=1]
+polygon = PoolVector2Array( -20, -20, 20, -20, 20, 19, -20, 19 )
 
 [node name="TestLevel" type="Node2D"]
 position = Vector2( 0, 1 )
 script = ExtResource( 1 )
-EnvironmentTexture = ExtResource( 2 )
 
 [node name="Ground" type="TileMap" parent="."]
 tile_set = ExtResource( 3 )
@@ -17,4 +20,71 @@ tile_data = PoolIntArray( 0, 0, 7, 1, 0, 7, 2, 0, 7, 3, 0, 7, 4, 0, 7, 5, 0, 7, 
 [node name="Structures" type="TileMap" parent="."]
 tile_set = ExtResource( 3 )
 format = 1
-tile_data = PoolIntArray( 0, 0, 7, 1, 0, 7, 2, 0, 7, 3, 0, 7, 4, 0, 7, 5, 0, 7, 6, 0, 7, 7, 0, 7, 8, 0, 7, 65536, 0, 7, 65537, 0, 7, 65538, 0, 7, 65539, 0, 7, 65540, 0, 7, 65541, 0, 7, 65542, 0, 7, 65543, 0, 7, 65544, 0, 7, 131072, 0, 7, 131073, 1, 65536, 131074, 1, 196609, 131075, 536870913, 3, 131076, -1610612735, 196609, 131077, 0, 7, 131078, 0, 7, 131079, 0, 7, 131080, 0, 7, 196608, 0, 7, 196609, -1073741823, 0, 196610, -2147483647, 2, 196611, 0, 7, 196612, -1610612735, 2, 196613, 0, 7, 196614, 0, 7, 196615, 0, 7, 196616, 0, 7, 262144, 536870913, 2, 262145, 536870913, 2, 262146, 1, 262145, 262147, 0, 7, 262148, -1610612735, 2, 262149, 0, 7, 262150, 0, 7, 262151, 0, 7, 262152, 0, 7, 327680, 0, 7, 327681, 0, 7, 327682, 0, 7, 327683, 0, 7, 327684, -1610612735, 2, 327685, 0, 7, 327686, 0, 7, 327687, 0, 7, 327688, 0, 7, 393216, 0, 7, 393217, 0, 7, 393218, 0, 7, 393219, 0, 7, 393220, 536870913, 262145, 393221, 536870913, 2, 393222, 536870913, 2, 393223, 1, 131075, 393224, 1, 2, 458752, 0, 7, 458753, 0, 7, 458754, 0, 7, 458755, 0, 7, 458756, 0, 7, 458757, 0, 7, 458758, 0, 7, 458759, 0, 7, 458760, 0, 7, 524288, 0, 7, 524289, 0, 7, 524290, 0, 7, 524291, 0, 7, 524292, 0, 7, 524293, 0, 7, 524294, 0, 7, 524295, 0, 7, 524296, 0, 7 )
+tile_data = PoolIntArray( 65537, 1, 0, 65538, -1073741823, 65536, 65539, -1610612735, 0, 131073, 1610612737, 65536, 131074, 1, 196609, 131075, 536870913, 3, 131076, -1610612735, 196609, 196608, -1073741823, 65536, 196609, 1610612737, 0, 196610, -2147483647, 2, 196612, -1610612735, 2, 262144, 536870913, 2, 262145, 536870913, 2, 262146, 1, 262145, 262148, -1610612735, 2, 327684, -1610612735, 2, 393220, 536870913, 262145, 393221, 536870913, 2, 393222, 536870913, 2, 393223, 1, 131075, 393224, 1, 2 )
+
+[node name="Misc" type="Node2D" parent="."]
+
+[node name="Box" type="LightOccluder2D" parent="Misc"]
+position = Vector2( 408, 113 )
+occluder = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Misc/Box"]
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 640, 384, 64, 64 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Box2" type="LightOccluder2D" parent="Misc"]
+position = Vector2( 417, 145 )
+rotation = 0.523598
+occluder = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Misc/Box2"]
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 640, 384, 64, 64 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Box3" type="LightOccluder2D" parent="Misc"]
+position = Vector2( 449, 128 )
+rotation = 1.0472
+occluder = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Misc/Box3"]
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 640, 384, 64, 64 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Interior" type="Area2D" parent="Misc"]
+position = Vector2( 0, -1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Misc/Interior"]
+visible = false
+polygon = PoolVector2Array( 1, 279, 150, 280, 152, 153, 294, 154, 298, 405, 571, 405, 575, 575, -2, 575 )
+
+[node name="Sprite" type="Sprite" parent="Misc/Interior"]
+position = Vector2( 264, 196 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 704, 320, 64, 64 )
+
+[node name="Light2D" type="Light2D" parent="Misc/Interior/Sprite"]
+texture = ExtResource( 4 )
+texture_scale = 3.0
+color = Color( 0.862745, 0.913725, 0.266667, 1 )
+energy = 0.65
+mode = 2
+shadow_enabled = true
+__meta__ = {
+"_edit_lock_": true
+}
+
+[connection signal="area_entered" from="Misc/Interior" to="." method="AreaEnteredSimple" binds= [ "Interior" ]]
+[connection signal="area_exited" from="Misc/Interior" to="." method="AreaExitedSimple" binds= [ "Interior" ]]
