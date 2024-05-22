@@ -6,6 +6,7 @@
 [ext_resource path="res://Art/light_tex.png" type="Texture" id=4]
 
 [sub_resource type="OccluderPolygon2D" id=1]
+cull_mode = 1
 polygon = PoolVector2Array( -20, -20, 20, -20, 20, 19, -20, 19 )
 
 [node name="TestLevel" type="Node2D"]
@@ -24,58 +25,22 @@ tile_data = PoolIntArray( 65537, 1, 0, 65538, -1073741823, 65536, 65539, -161061
 
 [node name="Misc" type="Node2D" parent="."]
 
-[node name="Box" type="LightOccluder2D" parent="Misc"]
-position = Vector2( 408, 113 )
-occluder = SubResource( 1 )
-
-[node name="Sprite" type="Sprite" parent="Misc/Box"]
-texture = ExtResource( 2 )
-region_enabled = true
-region_rect = Rect2( 640, 384, 64, 64 )
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Box2" type="LightOccluder2D" parent="Misc"]
-position = Vector2( 417, 145 )
-rotation = 0.523598
-occluder = SubResource( 1 )
-
-[node name="Sprite" type="Sprite" parent="Misc/Box2"]
-texture = ExtResource( 2 )
-region_enabled = true
-region_rect = Rect2( 640, 384, 64, 64 )
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Box3" type="LightOccluder2D" parent="Misc"]
-position = Vector2( 449, 128 )
-rotation = 1.0472
-occluder = SubResource( 1 )
-
-[node name="Sprite" type="Sprite" parent="Misc/Box3"]
-texture = ExtResource( 2 )
-region_enabled = true
-region_rect = Rect2( 640, 384, 64, 64 )
-__meta__ = {
-"_edit_lock_": true
-}
-
 [node name="Interior" type="Area2D" parent="Misc"]
 position = Vector2( 0, -1 )
+collision_layer = 2
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Misc/Interior"]
+[node name="ZoneDefinition" type="CollisionPolygon2D" parent="Misc/Interior"]
 visible = false
 polygon = PoolVector2Array( 1, 279, 150, 280, 152, 153, 294, 154, 298, 405, 571, 405, 575, 575, -2, 575 )
 
-[node name="Sprite" type="Sprite" parent="Misc/Interior"]
+[node name="Campfire" type="Sprite" parent="Misc/Interior"]
+visible = false
 position = Vector2( 264, 196 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 704, 320, 64, 64 )
 
-[node name="Light2D" type="Light2D" parent="Misc/Interior/Sprite"]
+[node name="Light2D" type="Light2D" parent="Misc/Interior/Campfire"]
 texture = ExtResource( 4 )
 texture_scale = 3.0
 color = Color( 0.862745, 0.913725, 0.266667, 1 )
@@ -86,5 +51,52 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="Exterior" type="Area2D" parent="Misc"]
+collision_layer = 2
+
+[node name="ZoneDefinition" type="CollisionPolygon2D" parent="Misc/Exterior"]
+visible = false
+polygon = PoolVector2Array( 1, 255, 127, 255, 145, 127, 294, 129, 318, 161, 320, 380, 455, 383, 433, 512, 525, 510, 507, 380, 575, 381, 575, 1, 2, 2 )
+
+[node name="Box" type="Sprite" parent="Misc/Exterior"]
+position = Vector2( 409, 114 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 640, 384, 64, 64 )
+
+[node name="Occluder" type="LightOccluder2D" parent="Misc/Exterior/Box"]
+occluder = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Box2" type="Sprite" parent="Misc/Exterior"]
+position = Vector2( 514, 163 )
+rotation = 0.523598
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 640, 384, 64, 64 )
+
+[node name="Occluder" type="LightOccluder2D" parent="Misc/Exterior/Box2"]
+occluder = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Box3" type="Sprite" parent="Misc/Exterior"]
+position = Vector2( 456, 81 )
+rotation = 1.0472
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 640, 384, 64, 64 )
+
+[node name="Occluder" type="LightOccluder2D" parent="Misc/Exterior/Box3"]
+occluder = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
 [connection signal="area_entered" from="Misc/Interior" to="." method="AreaEnteredSimple" binds= [ "Interior" ]]
 [connection signal="area_exited" from="Misc/Interior" to="." method="AreaExitedSimple" binds= [ "Interior" ]]
+[connection signal="area_entered" from="Misc/Exterior" to="." method="AreaEnteredSimple" binds= [ "Exterior" ]]
+[connection signal="area_exited" from="Misc/Exterior" to="." method="AreaExitedSimple" binds= [ "Exterior" ]]

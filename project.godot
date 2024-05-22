@@ -11,6 +11,8 @@ config_version=4
 [application]
 
 config/name="Godot Light Exploration"
+run/main_scene="res://Scenes/Main.tscn"
+boot_splash/show_image=false
 config/icon="res://icon.png"
 
 [gui]
