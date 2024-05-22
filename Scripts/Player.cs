@@ -24,10 +24,8 @@ public class Player : KinematicBody2D {
     }
 
     public override void _PhysicsProcess(float delta) {
-        // base._PhysicsProcess(delta);
         HandleMove(delta);
         MoveAndSlide(velocity);
-        // MoveAndCollide(velocity * delta);
 
         var space = GetWorld2d().DirectSpaceState;
 
