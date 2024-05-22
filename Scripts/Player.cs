@@ -2,9 +2,10 @@ using Godot;
 
 using System.Collections.Generic;
 
-public class Player : Node2D {
+public class Player : KinematicBody2D {
     [Export]
     private int speed = 150;
+    private Vector2 velocity = Vector2.Zero;
 
     private List<Node2D> checkObjects = new List<Node2D>();
     private HashSet<string> collisions = new HashSet<string>();
@@ -23,10 +24,16 @@ public class Player : Node2D {
     }
 
     public override void _PhysicsProcess(float delta) {
-        base._PhysicsProcess(delta);
+        // base._PhysicsProcess(delta);
+        HandleMove(delta);
+        MoveAndSlide(velocity);
+        // MoveAndCollide(velocity * delta);
+
         var space = GetWorld2d().DirectSpaceState;
+
+        uint layers = 1 << 0;
         foreach (var obj in checkObjects) {
-            Godot.Collections.Dictionary results = space.IntersectRay(Position, obj.Position);
+            Godot.Collections.Dictionary results = space.IntersectRay(Position, obj.Position, collisionLayer: layers); ;
             if (results.Count > 0) {
                 collisions.Add(obj.Name);
             } else {
@@ -53,8 +60,7 @@ public class Player : Node2D {
         if (dx != 0 || dy != 0) {
             Update();
         }
-        var dxy = new Vector2(dx, dy).Normalized() * speed * delta;
-        Position = Position + dxy;
+        velocity = new Vector2(dx, dy).Normalized() * speed;
     }
 
     private void UpdateObjectList() {
@@ -72,7 +78,7 @@ public class Player : Node2D {
     public override void _Draw() {
         foreach (var obj in checkObjects) {
             DrawLine(Vector2.Zero, obj.GlobalPosition - GlobalPosition, collisions.Contains(obj.Name) ? Colors.Red : Colors.Green, 2, true);
-            obj.SetVisible(!collisions.Contains(obj.Name));
+            obj.Visible = !collisions.Contains(obj.Name);
         }
     }
 }

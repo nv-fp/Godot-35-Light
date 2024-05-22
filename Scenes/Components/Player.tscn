@@ -10,11 +10,14 @@ region = Rect2( 11, 523, 42, 42 )
 [sub_resource type="CircleShape2D" id=2]
 radius = 19.6469
 
-[node name="Player" type="Node2D"]
+[node name="Player" type="KinematicBody2D"]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="."]
 
