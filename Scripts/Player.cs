@@ -20,6 +20,9 @@ public class Player : KinematicBody2D {
 
     public void AreaExited(TestLevel level, string areaName) {
         currentZones.Remove(areaName);
+        foreach(var obj in level.GetObjects(areaName)) {
+            obj.Visible = false;
+        }
         UpdateObjectList();
     }
 
@@ -66,11 +69,11 @@ public class Player : KinematicBody2D {
         foreach (var zone in currentZones) {
             checkObjects.AddRange(level.GetObjects(zone));
         }
-        Update();
     }
 
     public override void _Process(float delta) {
         HandleMove(delta);
+        Update();
     }
 
     public override void _Draw() {

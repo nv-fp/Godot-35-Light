@@ -15,19 +15,21 @@ public class TestLevel : Node2D {
         exteriorNodes = new List<Node2D>();
     }
 
+    private Node2D walkingNode = null;
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready() {
         findNodes("Interior", interiorNodes);
         findNodes("Exterior", exteriorNodes);
 
-        GD.Print("Interior Nodes:"); 
-        foreach (var n in interiorNodes) {
-            GD.Print($"  - {n.Name}");
-        }
-        GD.Print("Exterior Nodes:");
-        foreach (var n in exteriorNodes) {
-            GD.Print($"  - {n.Name}");
-        }
+        walkingNode = GetNode<Sprite>("Misc/Exterior/Box");
+        var walkingTween = GetTree().CreateTween();
+        var startPos = walkingNode.Position;
+        var endPos = startPos + new Vector2(0, 100);
+        walkingTween.SetTrans(Tween.TransitionType.Sine);
+        walkingTween.TweenProperty(walkingNode, "position", endPos, 2);
+        walkingTween.TweenProperty(walkingNode, "position", startPos, 2);
+        walkingTween.SetLoops();
     }
 
     private void findNodes(string zoneName, List<Node2D> list) {

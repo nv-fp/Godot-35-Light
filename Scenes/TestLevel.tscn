@@ -1,9 +1,17 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/TestLevel.cs" type="Script" id=1]
 [ext_resource path="res://Art/tilesheet.png" type="Texture" id=2]
 [ext_resource path="res://Art/Tileset.tres" type="TileSet" id=3]
 [ext_resource path="res://Art/light_tex.png" type="Texture" id=4]
+
+[sub_resource type="OccluderPolygon2D" id=3]
+cull_mode = 2
+polygon = PoolVector2Array( 0, 278, 127, 277, 138, 276, 149, 265, 149, 257, 150, 160, 152, 153, 159, 149, 195, 150, 205, 145, 243, 144, 253, 150, 287, 149, 293, 151, 298, 160, 297, 382, 300, 397, 308, 404, 319, 405, 460, 405, 459, 384, 319, 382, 318, 158, 315, 144, 310, 135, 299, 129, 253, 130, 243, 136, 204, 136, 195, 130, 155, 129, 143, 132, 130, 145, 130, 169, 128, 255, -1, 255 )
+
+[sub_resource type="OccluderPolygon2D" id=4]
+cull_mode = 2
+polygon = PoolVector2Array( 499, 385, 500, 445, 512, 445, 512, 405, 575, 406, 574, 384 )
 
 [sub_resource type="OccluderPolygon2D" id=1]
 cull_mode = 1
@@ -23,8 +31,15 @@ tile_data = PoolIntArray( 0, 0, 7, 1, 0, 7, 2, 0, 7, 3, 0, 7, 4, 0, 7, 5, 0, 7, 
 
 [node name="Structures" type="TileMap" parent="."]
 tile_set = ExtResource( 3 )
+occluder_light_mask = 0
 format = 1
 tile_data = PoolIntArray( 65537, 1, 0, 65538, -1073741823, 65536, 65539, -1610612735, 0, 131073, 1610612737, 65536, 131074, 1, 196609, 131075, 536870913, 3, 131076, -1610612735, 196609, 196608, -1073741823, 65536, 196609, 1610612737, 0, 196610, -2147483647, 2, 196612, -1610612735, 2, 262144, 536870913, 2, 262145, 536870913, 2, 262146, 1, 262145, 262148, -1610612735, 2, 327684, -1610612735, 2, 393220, 536870913, 262145, 393221, 536870913, 2, 393222, 536870913, 2, 393223, 1, 131075, 393224, 1, 2 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource( 3 )
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="."]
+occluder = SubResource( 4 )
 
 [node name="Misc" type="Node2D" parent="."]
 
